@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>Покупатели</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light" style="background: #26A9E0">
+        <div class="container-fluid">
+            <a class="navbar-brand"  href="/">
+                <img th:src="@{/img/book.png}" style="margin: auto" alt="" width="80" height="80"/>
+                <h2 style="color: white">BookStore</h2>
+            </a>
+            <div class="d-inline-flex align-items-center">
+                <a class="list-group-item list-group-itemprimary item hrefitem" style="margin-left: 10px;" href="/Book">Книги</a>
+                <a class="list-group-item list-group-iteminfo item hrefitem text-white" style="margin-left: 10px; background: #0b5ed7"  href="/Customer">Покупатели</a>
+                <a class="list-group-item list-group-iteminfo item hrefitem"  style="margin-left: 10px" href="/Sale">Продавцы</a>
+                <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Delivery">Заказы</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th><th scope="col">Фамилия</th>
+                        <th scope="col">Имя</th><th scope="col">Телефон</th>
+                        <th scope="col">Почта</th>
+                        <th scope="col">Редактировать</th><th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${customers}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getFirst_name()}"></td>
+                        <td th:text="${var.getLast_name()}"></td>
+                        <td th:text="${var.getPhone()}"></td><td th:text="${var.getEmail()}"></td>
+                        <td>
+                            <form th:action="@{/Customer/update_one}" style="width: fit-content" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <input name="first_name" type="hidden" th:value="${var.getFirst_name()}"/>
+                                <input name="last_name" type="hidden" th:value="${var.getLast_name()}"/>
+                                <input name="phone" type="hidden" th:value="${var.getPhone()}"/>
+                                <input name="email" type="hidden" th:value="${var.getEmail()}"/>
+                                <button type="submit" class="btn btn-primary border-0">Редактировать</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/Customer/delete}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <button type="submit"  class="btn btn-primary border-0" >Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/Customer/create}" th:object="${customer}">
+                    <div class="mb-3">
+                        <br> <label class="col-sm-3 col-12" style="font-size: 30px">Создание</label>
+                        <div class="col-sm-6" style="width: auto">
+
+
+                            <label for="first_name" class="col-sm-3 col-form-label">Фамилия</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name" th:field="*{first_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></div>
+
+                            <label for="last_name" class="col-sm-3 col-form-label">Имя</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name" th:field="*{last_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></div>
+
+
+                            <label for="phone" class="col-sm-3 col-form-label">Номер телефона</label>
+                            <input type="text" name="phone" class="form-control" id="phone" th:field="*{phone}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+
+                            <label for="email" class="col-sm-3 col-form-label">Адрес электронной почты</label>
+                            <input type="text" name="email" class="form-control" id="email" th:field="*{email}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+                        </div>
+                    </div>
+                    <p><br><button type="submit" class="btn btn-primary border-0">Добавить</button><br></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

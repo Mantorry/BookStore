@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+<nav class="navbar navbar-light" style="background: #26A9E0">
+    <div class="container-fluid">
+        <a class="navbar-brand"  href="/">
+            <img th:src="@{/img/book.png}" style="margin: auto" alt="" width="80" height="80"/>
+            <h2 style="color: white">BookStore</h2>
+        </a>
+        <div class="d-inline-flex align-items-center">
+            <a class="list-group-item list-group-itemprimary item hrefitem" style="margin-left: 10px" href="/Book">Книги</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Customer">Покупатели</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem"  style="margin-left: 10px" href="/Sale">Продавцы</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Delivery">Заказы</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem text-white" style="margin-left: 10px; background: #0b5ed7"  href="/Login">Вход</a>
+        </div>
+    </div>
+</nav>
+<form method="POST" th:action="@{/Login}" id="loginFrom">
+    <div class="mb-3" th:align="CENTER">
+        <br>
+        <h3>Авторизация</h3>
+        <div class="col-sm-6" style="background: #26A9E0; padding: 25px; border-radius: 25px">
+
+            <label for="username" class="col-sm-3 col-form-label text-white">Имя пользователя: </label>
+            <input type="text" class="form-control" name="username" id="username"/><br/>
+
+            <label for="password" class="col-sm-3 col-form-label text-white">Пароль: </label>
+            <input type="password" class="form-control" name="password" id="password"/><br/>
+
+            <p>
+                <br>
+                <button type="submit" class="btn btn-primary" style="font-size: 20px; width: auto">Войти
+                </button>
+                <br>
+            </p>
+            <div th:if="${param.error}" class="text-white">Проверьте имя пользователя и пароль!</div>
+            <br>
+            <a th:href="@{/Registration}" class="text-white">Нет аккаунта?</a>
+        </div>
+    </div>
+</form>
+</body>
+</html>

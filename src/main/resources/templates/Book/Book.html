@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>Книги</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light" style="background: #26A9E0">
+        <div class="container-fluid">
+            <a class="navbar-brand"  href="/">
+                <img th:src="@{/img/book.png}" style="margin: auto" alt="" width="80" height="80"/>
+                <h2 style="color: white">BookStore</h2>
+            </a>
+            <div class="d-inline-flex align-items-center">
+                <a class="list-group-item list-group-itemprimary item hrefitem text-white" style="margin-left: 10px; background: #0b5ed7" href="/Book">Книги</a>
+                <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Customer">Покупатели</a>
+                <a class="list-group-item list-group-iteminfo item hrefitem"  style="margin-left: 10px" href="/Sale">Продавцы</a>
+                <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Delivery">Заказы</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th><th scope="col">Автор</th>
+                        <th scope="col">Название</th><th scope="col">Издательство</th>
+                        <th scope="col">Серия</th><th scope="col">Год издания</th>
+                        <th scope="col">Цена (руб.)</th>
+                        <th scope="col">Редактировать</th><th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${books}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getAuthor()}"></td>
+                        <td th:text="${var.getTitle()}"></td><td th:text="${var.getPublishing()}"></td>
+                        <td th:text="${var.getSeriya()}"></td><td th:text="${var.getYear()}"></td>
+                        <td th:text="${var.getPrice()}"></td>
+                        <td>
+                            <form th:action="@{/Book/update_one}" style="width: fit-content" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <input name="author" type="hidden" th:value="${var.getAuthor()}"/>
+                                <input name="title" type="hidden" th:value="${var.getTitle()}"/>
+                                <input name="seriya" type="hidden" th:value="${var.getSeriya()}"/>
+                                <input name="year" type="hidden" th:value="${var.getYear()}"/>
+                                <input name="publishing" type="hidden" th:value="${var.getPublishing()}"/>
+                                <input name="price" type="hidden" th:value="${var.getPrice()}"/>
+                                <button type="submit" class="btn btn-primary border-0">Редактировать</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/Book/delete}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <button type="submit"  class="btn btn-primary border-0" >Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/Book/create}" th:object="${book}">
+                    <div class="mb-3">
+                        <br> <label class="col-sm-3 col-12" style="font-size: 30px">Создание</label>
+                        <div class="col-sm-6" style="width: auto">
+
+
+                            <label for="title" class="col-sm-3 col-form-label">Название</label>
+                            <input type="text" name="title" class="form-control" id="title" th:field="*{title}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+                            <label for="author" class="col-sm-3 col-form-label">Автор</label>
+                            <input type="text" name="author" class="form-control" id="author" th:field="*{author}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+
+
+                            <label for="publishing" class="col-sm-3 col-form-label">Издательство</label>
+                            <input type="text" name="publishing" class="form-control" id="publishing" th:field="*{publishing}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('publishing')}" th:errors="*{publishing}"></div>
+
+                            <label for="year" class="col-sm-3 col-form-label">Год издания</label>
+                            <input type="number" name="year" class="form-control" id="year" th:field="*{year}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+
+                            <label for="seriya" class="col-sm-3 col-form-label">Серия</label>
+                            <input type="text" name="seriya" class="form-control" id="seriya" th:field="*{seriya}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('seriya')}" th:errors="*{seriya}"></div>
+
+                            <label for="price" class="col-sm-3 col-form-label">Цена (руб.)</label>
+                            <input type="number" step="0.01" name="price" class="form-control" id="price" th:field="*{price}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                        </div>
+                    </div>
+                    <p><br><button type="submit" class="btn btn-primary border-0">Добавить</button><br></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

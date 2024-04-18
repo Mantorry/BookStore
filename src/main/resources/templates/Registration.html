@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<nav class="navbar navbar-light" style="background: #26A9E0">
+    <div class="container-fluid">
+        <a class="navbar-brand"  href="/">
+            <img th:src="@{/img/book.png}" style="margin: auto" alt="" width="80" height="80"/>
+            <h2 style="color: white">BookStore</h2>
+        </a>
+        <div class="d-inline-flex align-items-center">
+            <a class="list-group-item list-group-itemprimary item hrefitem" style="margin-left: 10px" href="/Book">Книги</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Customer">Покупатели</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem"  style="margin-left: 10px" href="/Sale">Продавцы</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Delivery">Заказы</a>
+            <a class="list-group-item list-group-iteminfo item hrefitem" style="margin-left: 10px"  href="/Login">Вход</a>
+        </div>
+    </div>
+</nav>
+<form method="POST" th:action="@{/Registration}" id="registerForm">
+    <div class="mb-3" th:align="CENTER">
+        <br>
+        <h3>Регистрация</h3>
+        <div class="col-sm-6" style="background: #26A9E0; padding: 25px; border-radius: 25px">
+
+            <label for="username" class="col-sm-3 col-form-label text-white">Имя пользователя: </label>
+            <input type="text" name="username" class="form-control" id="username"/><br/>
+
+            <label for="password" class="col-sm-3 col-form-label text-white">Пароль:</label>
+            <input type="password" class="form-control" name="password" id="password"/><br/>
+
+            <label for="nickname" class="col-sm-3 col-form-label text-white">Отображаемое имя: </label>
+            <input type="text" class="form-control" name="nickname" id="nickname"/><br/>
+
+            <label for="email" class="col-sm-3 col-form-label text-white">Электронная почта: </label>
+            <input type="text" class="form-control" name="email" id="email"/><br/>
+
+            <p>
+                <br>
+                <button type="submit" class="btn btn-primary" style="font-size: 20px; width: auto">Регистрация</button>
+                <br>
+            </p>
+
+        </div>
+    </div>
+
+</form>
+</body>
+</html>
